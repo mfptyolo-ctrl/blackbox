@@ -12,6 +12,11 @@
   background: transparent;
 }
 
+/** macOS has super rounded headerbars, so we need fully rounded buttons */
+#blackbox-main-window.macos .custom-headerbar button {
+  border-radius: 50%;
+}
+
 #blackbox-main-window scrollbar {
   background: @window_bg_color;
 }
@@ -34,25 +39,23 @@ window:not(.about) headerbar,
   padding-bottom: 0;
 }
 
-.custom-headerbar windowcontrols:not(.empty).start {
+.custom-headerbar tabbar {
+  margin: 0 -6px;
+}
+
+.custom-headerbar:not(.left-empty) .tabbar-left {
   margin-right: 6px;
 }
 
-.custom-headerbar windowcontrols.start.empty ~ tabbar {
-  margin-left: -6px;
-}
-
-.custom-headerbar windowcontrols:not(.empty).end {
+.custom-headerbar:not(.right-empty) .tabbar-right {
   margin-left: 6px;
 }
 
 /**
  * Add space on the left when "Drag Area" is enabled.
  */
-.custom-headerbar.with-dragarea:not(.single-tab-mode)
-  windowcontrols.start.empty
-  ~ tabbar {
-  margin-left: 34px;
+.custom-headerbar.with-dragarea:not(.single-tab-mode).left-empty tabbar {
+  margin-left: 28px;
 }
 
 .toolbar {
@@ -130,4 +133,9 @@ themeswitcher checkbutton.light radio {
 themeswitcher checkbutton.dark radio {
   color: white;
   background-color: #1e1e1e;
+}
+
+@media (prefers-color-scheme: dark) {
+  @define-color root_context_color  shade(@red_5, 0.7);
+  @define-color ssh_context_color   shade(@purple_5, 0.7);
 }

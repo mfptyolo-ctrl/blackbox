@@ -56,11 +56,6 @@
               </object>
             </child>
             <child>
-              <object class="AdwSwitchRow" id="show_menu_button_switch_row">
-                <property name="title" translatable="yes">Show Menu Button</property>
-              </object>
-            </child>
-            <child>
               <object class="AdwSwitchRow" id="drag_area_switch_row">
                 <property name="title" translatable="yes">Drag Area</property>
                 <property name="subtitle" translatable="yes">Enable to reserve some space on the left side to drag the window.</property>
@@ -91,6 +86,25 @@
                     <property name="adjustment">floating_controls_delay_adjustment</property>
                   </object>
                 </child>
+              </object>
+            </child>
+          </object>
+        </child>
+        <child>
+          <object class="AdwPreferencesGroup">
+            <child>
+              <object class="AdwSwitchRow" id="show_new_tab_button_switch_row">
+                <property name="title" translatable="yes">Show New Tab Button</property>
+              </object>
+            </child>
+            <child>
+              <object class="AdwSwitchRow" id="show_search_toggle_button_switch_row">
+                <property name="title" translatable="yes">Show Search Button</property>
+              </object>
+            </child>
+            <child>
+              <object class="AdwSwitchRow" id="show_menu_button_switch_row">
+                <property name="title" translatable="yes">Show Menu Button</property>
               </object>
             </child>
           </object>
@@ -509,7 +523,7 @@
                 <property name="wrap">True</property>
                 <property name="margin-top">6</property>
                 <property name="use-markup">True</property>
-                <property name="label" translatable="yes">The VTE build you are using does not support Sixel. Sixel is still an experimental feature in VTE. For this reason, most distros do not build VTE with Sixel support. Installing Black Box via Flatpak will enable this feature. &lt;a href=&quot;https://gitlab.gnome.org/raggesilver/blackbox/-/issues/273&quot;&gt;See discussion in issue tracker.&lt;/a&gt;</property>
+                <property name="label" translatable="yes">The VTE build you are using does not have support Sixel. Sixel is still an experimental feature in VTE. For this reason, most distros do not build VTE with Sixel support. Installing Black Box via Flatpak will enable this feature. &lt;a href=&quot;https://gitlab.gnome.org/raggesilver/blackbox/-/issues/273&quot;&gt;See discussion in issue tracker.&lt;/a&gt;</property>
                 <style>
                   <class name="caption" />
                 </style>

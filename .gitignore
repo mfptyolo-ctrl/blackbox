@@ -2,6 +2,7 @@
 *.*~
 \#*#
 *.swp
+.DS_Store
 
 # Test files
 test*
@@ -15,6 +16,8 @@ _build/
 repo/
 *.flatpak
 .buildconfig
+/build-pkg/
+*.dmg
 
 # IDE dirs
 .vscode/
@@ -22,3 +25,6 @@ repo/
 
 # i18n
 po/*.pot
+
+/.cache
+/compile_commands.json

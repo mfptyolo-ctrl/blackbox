@@ -77,6 +77,12 @@ public class Terminal.Terminal : Vte.Terminal {
     }
   }
 
+  public unowned string? title {
+    get {
+      return this.get_termprop_string(Vte.TERMPROP_XTERM_TITLE, null);
+    }
+  }
+
   // Fields
 
   public Window window;
@@ -408,6 +414,12 @@ public class Terminal.Terminal : Vte.Terminal {
         });
       }
     });
+
+    this.termprop_changed.connect((term, name) => {
+      if (name == Vte.TERMPROP_XTERM_TITLE) {
+        this.notify_property("title");
+      }
+    });
   }
 
   private void spawn(string? command, string? cwd) throws Error {
@@ -592,7 +604,7 @@ public class Terminal.Terminal : Vte.Terminal {
     }
 
     // Get terminal's foreground process
-    var fgpid = yield get_foreground_process(fd);
+    var fgpid = get_foreground_process(fd);
     if (fgpid == -1) {
       return false;
     }
@@ -601,7 +613,14 @@ public class Terminal.Terminal : Vte.Terminal {
       return true;
     }
 
-    command = get_process_cmdline(fgpid);
+    string? cmd = null;
+    SourceFunc callback = get_can_close.callback;
+    new GLib.Thread<void>("get-cmdline", () => {
+      cmd = get_process_cmdline(fgpid);
+      GLib.Idle.add((owned) callback);
+    });
+    yield;
+    command = cmd;
 
     return command == null;
   }

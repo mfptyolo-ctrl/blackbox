@@ -54,6 +54,9 @@ public class Terminal.ShortcutDialog : Adw.Dialog {
     if (DEVEL) {
       this.add_css_class ("devel");
     }
+#if MACOS
+    this.add_css_class ("macos");
+#endif
 
     this.response.connect_after (() => this.close ());
 
@@ -86,6 +89,9 @@ public class Terminal.ShortcutDialog : Adw.Dialog {
       const Gdk.ModifierType valid_modifiers =
         Gdk.ModifierType.CONTROL_MASK |
         Gdk.ModifierType.SHIFT_MASK |
+#if MACOS
+        Gdk.ModifierType.META_MASK |
+#endif
         Gdk.ModifierType.ALT_MASK;
 
       var real_modifiers = valid_modifiers & modifier;

@@ -24,7 +24,7 @@ config_header = configure_file(input: 'config.vala.in', output: 'config.vala', c
 
 blackbox_deps = [
   dependency('gio-2.0', version: '>= 2.50'),
-  dependency('gtk4', version: '>= 4.12.0'),
+  dependency('gtk4', version: '>= 4.18.0'),
   dependency('libadwaita-1', version: '>= 1.4'),
   dependency('vte-2.91-gtk4', version: '>= 0.69.0'),
   dependency('json-glib-1.0', version: '>= 1.4.4'),
@@ -36,27 +36,47 @@ blackbox_deps = [
   meson.get_compiler('vala').find_library('posix'),
 ]
 
-# https://github.com/elementary/terminal/blob/d9620eb12331a28c658f97ac9a1bdb809aa90089/meson.build
 vapi_dir = meson.current_source_dir() / 'vapi'
 add_project_arguments('--vapidir=' + vapi_dir, language: 'vala')
-add_project_arguments('-DPCRE2_CODE_UNIT_WIDTH=0', language: 'c')
 
-# This is required until VTE 0.70 is out
-add_project_arguments('--disable-since-check', language: 'vala')
-
-gnome = import('gnome')
-
-blackbox_sources += gnome.compile_resources('blackbox-resources', 'blackbox.gresource.xml', c_name: 'blackbox')
+# We add `-w` because the C code Vala generates has a bunch of unused variables
+# which keep polluting the build output with warnings.
+add_project_arguments(['-DPCRE2_CODE_UNIT_WIDTH=0', '-w'], language: 'c')
 
 if get_option('blackbox_debug_memory')
   add_project_arguments('-D', 'BLACKBOX_DEBUG_MEMORY', language: 'vala')
 endif
 
-executable(
+if host_machine.system() == 'darwin'
+  add_project_arguments('--define=MACOS', language: 'vala')
+  add_project_arguments('-DMACOS', language: 'c')
+endif
+
+gnome = import('gnome')
+
+blackbox_sources += gnome.compile_resources('blackbox-resources', 'blackbox.gresource.xml', c_name: 'blackbox')
+
+blackbox_exe = executable(
   blackbox_cli,
   blackbox_sources,
   config_header,
   vala_args: '--target-glib=2.50',
   dependencies: blackbox_deps,
+  include_directories: include_directories('utils'),
   install: true,
 )
+
+# The Adwaita theme prints several thousand warnings when running apps in macOS,
+# mostly "Expected ';' at the end of the block". Here we use environment
+# variables to override the theme and avoid those warnings.
+if host_machine.system() == 'darwin'
+  gtk_css_compat_dir = meson.project_source_root() / 'data' / 'macos' / 'gtk-css-compat'
+
+  run_target(
+    'run',
+    command: blackbox_exe,
+    env: {
+      'G_RESOURCE_OVERLAYS': '/org/gnome/Adwaita=' + gtk_css_compat_dir,
+    },
+  )
+endif
