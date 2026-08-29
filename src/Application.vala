@@ -23,6 +23,7 @@ public class Terminal.Application : Adw.Application {
     { "focus-next-tab", on_focus_next_tab },
     { "focus-previous-tab", on_focus_previous_tab },
     { "new-window", on_new_window },
+    { "open-file-manager", on_open_file_manager },
     { "about", on_about },
     //  { "quit", on_app_quit },
   };
@@ -123,6 +124,16 @@ public class Terminal.Application : Adw.Application {
   private void on_about() {
     var win = create_about_dialog();
     win.present(this.get_active_window());
+  }
+
+  private void on_open_file_manager() {
+    var w = this.get_active_window();
+    Terminal? active_terminal = (w is Window) ? w.active_terminal : null;
+
+    string? cwd = Terminal
+      .get_current_working_directory_for_new_session(active_terminal);
+
+    AppInfo.launch_default_for_uri("file://" + cwd, null);
   }
 
   private void on_new_window() {

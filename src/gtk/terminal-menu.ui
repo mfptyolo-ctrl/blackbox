@@ -82,6 +82,13 @@
 
     <section>
       <item>
+        <attribute name="label" translatable="yes">Open in File Manager</attribute>
+        <attribute name="action">app.open-file-manager</attribute>
+      </item>
+    </section>
+
+    <section>
+      <item>
         <attribute name="label" translatable="yes"
           >Keyboard Shortcuts</attribute
         >

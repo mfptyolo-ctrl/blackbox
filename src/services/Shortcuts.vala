@@ -22,6 +22,7 @@ namespace Terminal {
   public const string ACTION_FOCUS_NEXT_TAB = "app.focus-next-tab";
   public const string ACTION_FOCUS_PREVIOUS_TAB = "app.focus-previous-tab";
   public const string ACTION_NEW_WINDOW = "app.new-window";
+  public const string ACTION_OPEN_FILE_MANAGER = "app.open-file-manager";
 
   public const string ACTION_WIN_SWITCH_HEADER_BAR_MODE =
     "win.switch-headerbar-mode";
@@ -101,6 +102,8 @@ public class Terminal.Keymap : Object, Json.Serializable {
     _keymap.set(ACTION_WIN_MOVE_TAB_LEFT, "<Shift><Control>Page_Up");
     _keymap.set(ACTION_WIN_MOVE_TAB_RIGHT, "<Shift><Control>Page_Down");
     _keymap.set(ACTION_WIN_CLEAR_SCROLLBACK, "<Control>k");
+
+    _keymap.set(ACTION_OPEN_FILE_MANAGER, "<Control>period");
 
     _keymap.set(ACTION_WIN_SWITCH_TAB_1, "<Alt>1");
     _keymap.set(ACTION_WIN_SWITCH_TAB_2, "<Alt>2");

@@ -75,6 +75,12 @@
             </child>
             <child>
               <object class="GtkShortcutsShortcut">
+                <property name="title" translatable="yes" context="shortcut window">Open in File Manager</property>
+                <property name="action-name">app.open-file-manager</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkShortcutsShortcut">
                 <property name="title" translatable="yes" context="shortcut window">Zoom in</property>
                 <property name="action-name">win.zoom-in</property>
               </object>
@@ -197,3 +203,4 @@
     </child>
   </object>
 </interface>
+
