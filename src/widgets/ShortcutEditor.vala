@@ -132,6 +132,7 @@ public class Terminal.ShortcutEditor : Adw.PreferencesPage {
     action_map.@set(ACTION_FOCUS_NEXT_TAB, _("Focus Next Tab"));
     action_map.@set(ACTION_FOCUS_PREVIOUS_TAB, _("Focus Previous Tab"));
     action_map.@set(ACTION_NEW_WINDOW, _("New Window"));
+    action_map.@set(ACTION_OPEN_FILE_MANAGER, _("Open in File Manager"));
     action_map.@set(ACTION_WIN_SWITCH_HEADER_BAR_MODE, _("Toggle Header Bar"));
     action_map.@set(ACTION_WIN_NEW_TAB, _("New Tab"));
     action_map.@set(ACTION_WIN_EDIT_PREFERENCES, _("Preferences"));
